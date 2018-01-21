@@ -21,6 +21,12 @@ Go to the Hunts Point POS directory and run:
 ```bash
 $ npm install
 $ bower install
+если вы используете usb в качестве адаптера для термопринтера:
+
+В Linux вам нужно libudevбудет создать libusb.
+В Ubuntu / Debian: sudo apt-get install build-essential libudev-dev.
+В Windows используйте Zadig для установки драйвера WinUSB для вашего устройства USB.
+В противном случае вы получите LIBUSB_ERROR_NOT_SUPPORTED при попытке открыть устройства.
 ```
 
 ## Step 3: Run the app!
