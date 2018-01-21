@@ -22,6 +22,8 @@ Go to the Hunts Point POS directory and run:
 $ npm install
 $ bower install
 $ npm i escpos --save
+$ npm install text2png
+$ npm install canvas
 
 если вы используете usb в качестве адаптера для термопринтера:
 В Linux вам нужно libudevбудет создать libusb.

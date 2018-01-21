@@ -7,6 +7,13 @@ bodyParser 	= require('body-parser'),
 publicPath 	= '/../public/',
 liveCart
 
+const escpos = require('escpos');
+
+const device  = new escpos.USB(1046,20497); //Подключаем чековый принтер
+const printer = new escpos.Printer(device);
+//console.log(escpos.USB.findPrinter.interfaces());
+
+
 console.log('Оптика 5 звезд!')
 console.log('Server started')
 //console.log(__dirname + publicPath)
@@ -22,24 +29,37 @@ app.get('/', function (req, res) {
 	//console.log('Поступил GET запрос')
 })
 
-app.post('/', function (req, res, next) {
+app.post('/', function (req, res, next) { //Принимаем POST запрос для печати данных на чековый принтер.
 	res = req.body
 	//res2 = JSON.parse(res1)
 	//keys = Object.keys(res2);
 	for (va in res) {
-		console.log("obj." + va + " = " + res[va]);
-}
-	//console.log(keys)
-	
-	
-	//console.log(typeof req.body);
-	
-	
-   //console.log(JSON.stringify(req.body));
-   //var obj = JSON.parse(req.body);
-   
-	//console.log(bodyParser.json)
-	//console.log(post)
+			console.log("obj." + va + " = " + res[va]);
+	}
+
+		escpos.Image.load(__dirname + '/tux.png', function(image){
+		
+		  device.open(function(){
+		
+		    printer
+		    .align('ct')
+		
+		    .image(image, 's8')
+		    //.image(image, 'd8')
+		    //.image(image, 's24')
+		    //.image(image, 'd24')
+		    
+		    //.raster(image)
+		    //.raster(image, 'dw')
+		    //.raster(image, 'dh')
+		    //.raster(image, 'dwdh')
+		
+		    .cut();
+		  
+		  });
+		
+		});
+
 })
 
 app.use('/api', require('./api'))
