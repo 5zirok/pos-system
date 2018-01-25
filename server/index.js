@@ -6,6 +6,8 @@ path 		= require('path'),
 bodyParser 	= require('body-parser'),
 publicPath 	= '/../public/',
 liveCart
+global.group_id=3;
+global.usr="od_1";
 
 const escpos = require('escpos');
 
@@ -31,34 +33,24 @@ app.get('/', function (req, res) {
 
 app.post('/', function (req, res, next) { //Принимаем POST запрос для печати данных на чековый принтер.
 	res = req.body
-	//res2 = JSON.parse(res1)
-	//keys = Object.keys(res2);
-	for (va in res) {
-			console.log("obj." + va + " = " + res[va]);
-	}
+	var str=''; 
+	for (va in res) {str += (va +  res[va]);}
+	arr = str.match(/(.{1,30})/gim) || '';//Разбиваем строку чека по 30 символов
 
-		escpos.Image.load(__dirname + '/tux.png', function(image){
+device.open(function(err){
+	for (va in arr) {//Печатаем на чековый принтер построчно из масива
 		
-		  device.open(function(){
-		
-		    printer
-		    .align('ct')
-		
-		    .image(image, 's8')
-		    //.image(image, 'd8')
-		    //.image(image, 's24')
-		    //.image(image, 'd24')
-		    
-		    //.raster(image)
-		    //.raster(image, 'dw')
-		    //.raster(image, 'dh')
-		    //.raster(image, 'dwdh')
-		
-		    .cut();
-		  
-		  });
-		
-		});
+		printer
+		  .model('')
+		  .font('b')
+		  .align('ct')
+		  .style('bu')
+		  .size(1, 1)
+		  .encode('CP866')
+		  .text(arr[va]);
+	}
+	printer.cut();
+});
 
 })
 

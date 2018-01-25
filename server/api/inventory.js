@@ -2,7 +2,23 @@ var app 	= require('express')()
 var server 	= require('http').Server(app)
 var bodyParser = require('body-parser')
 var Datastore = require('nedb')
+var fs = require('fs')
 var async = require('async')
+var str="";
+
+var request = require('request');//Подключаем возможность считывать данные с удаленных сайтов
+//Перезаписываем базу товара
+request('http://linzcontact.ru/api5zirok.php?products_list=1&group_id='+global.group_id, function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+  fs.writeFileSync("./server/databases/inventory.db", body)
+  }
+})
+//Перезаписываем базу товара
+request('http://linzcontact.ru/api5zirok.php?category_list=1', function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+  fs.writeFileSync("./server/databases/category_list.db", body)
+  }
+})
 
 app.use(bodyParser.json())
 
@@ -10,7 +26,7 @@ module.exports = app
 
 // Database stuff
 var inventoryDB = new Datastore({ 
-	filename: './server/databases/api.db', 
+	filename: './server/databases/inventory.db', 
 	autoload: true 
 })
 
@@ -36,7 +52,7 @@ app.get('/product/:productId', function (req, res) {
 // GET all inventory items
 app.get('/products', function (req, res) {
 
-	inventoryDB.find({}, function (err, docs) {
+	inventoryDB.find({categoryID: "29"}, function (err, docs) {
 		res.send(docs)
 	})
 })
