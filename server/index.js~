@@ -6,8 +6,10 @@ path 		= require('path'),
 bodyParser 	= require('body-parser'),
 publicPath 	= '/../public/',
 liveCart
-//global.group_id=3;
-//global.usr="od_1";
+var usbScanner =  require ('usbscanner'). usbScanner ;
+var getDevices =  require ('usbscanner'). getDevices ;
+global.group_id=3;
+global.usr="od_1";
 
 const escpos = require('escpos');
 
