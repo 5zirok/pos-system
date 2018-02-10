@@ -36,6 +36,8 @@ sudo apt-get install libusb-1.0-0-dev
 sudo npm install node-hid
 npm install node-usb-barcode-scanner
 
+
+bower install angular-tree-control
 ```
 
 ## Step 3: Run the app!
