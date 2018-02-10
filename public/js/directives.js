@@ -64,7 +64,7 @@ pos.directive('addManualItem',function () {
     link: function (scope, el) {
       
       scope.add = function () {
-        scope.manualItem.name = "----";
+        scope.manualItem.name = "khklhlkhlkhlkhlkhlkjh";
         scope.addItem({item: scope.manualItem});
         el.find('div').eq(0).modal('hide');
         scope.manualItem = '';

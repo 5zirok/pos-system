@@ -1,34 +1,40 @@
-
-<div class="container">
-	
-	<a href="#/inventory/create-product" class="btn btn-success pull-right">
-		<i class="glyphicon glyphicon-plus"></i> Добавить новое наименование
-	</a>
-	<br/><br/>
-
-	<table class="table table-responsive table-striped table-hover">
+<div ng-style="{'display': 'table-cell', 'width':'30%'}">
+  <treecontrol class="tree-classic"
+     tree-model="dataForTheTree"
+     options="treeOptions"
+     on-selection="showSelected(node)"
+     selected-node="node1">
+     {{node.name}}
+  </treecontrol>
+</div>{{selected}}uytyutuuyt
+<div class="container" ng-style="{'display':'table-cell'}">
+<input type="text" class="form-control" name="inventory_search"/>
+<!--input type="number" step="any" min="0" class="form-control" name="price" ng-model="manualItem.price" required/-->
+<table class="table table-responsive table-striped table-hover">
 		<thead>
 			<tr>
+				<th>Штрих код</th>
 				<th>Наименования</th>
 				<th>Цена</th>
 				<th>Количество на складе</th>
-				<th></th>
+				<!--th></th-->
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="product in inventory">
-				<td> 
-					<a href="" ng-click="editProduct(product._id)">
-						{{ product.name }} 
-					</a>
+				<td> {{ product.barcode}}</td>
+				<td>
+					<!--a href="" ng-click="editProduct(product._id)"-->
+						{{ product.name }}
+					<!--/a-->
 				</td>
-				<td> {{ product.price |  currency:" "}}</td>
+				<td> {{ product.price}}</td>
 				<td> {{ product.quantity_on_hand }} </td>
-				<td> 
+				<!--td>
 					<a class="btn btn-info" ng-click="editProduct(product._id)">
 						<i class="glyphicon glyphicon-pencil"></i>
 					</a>
-				</td>
+				</td-->
 			</tr>
 		</tbody>
 	</table>

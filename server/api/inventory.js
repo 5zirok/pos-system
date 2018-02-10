@@ -25,9 +25,14 @@ app.use(bodyParser.json())
 module.exports = app
 
 // Database stuff
-var inventoryDB = new Datastore({ 
-	filename: './server/databases/inventory.db', 
-	autoload: true 
+var inventoryDB = new Datastore({
+	filename: './server/databases/inventory.db',
+  fieldName: 'categoryID',
+	autoload: true
+})
+var categoryDB = new Datastore({
+	filename: './server/databases/category_list.db',
+	autoload: true
 })
 
 // GET inventory
@@ -37,7 +42,7 @@ app.get('/', function (req, res) {
 
 // GET a product from inventory by _id
 app.get('/product/:productId', function (req, res) {
-	
+
 	if (!req.params.productId) {
 		res.status(500).send('ID field is required.')
 	}
@@ -48,11 +53,26 @@ app.get('/product/:productId', function (req, res) {
 	}
 
 })
+// GET all category_list
+app.get('/category_list', function (req, res) {
 
+	categoryDB.find({}, function (err, docs) {
+		//console.log(categoryDB);
+    //console.log(docs);
+		res.send(docs)
+	})
+})
 // GET all inventory items
 app.get('/products', function (req, res) {
 
-	inventoryDB.find({categoryID: "29"}, function (err, docs) {
+	inventoryDB.find({categoryID: "41"}, function (err, docs) {
+		//console.log(docs);
+		res.send(docs)
+	})
+})
+app.get('/products_pos', function (req, res) {
+	inventoryDB.find({}, function (err, docs) {
+		//console.log('products_pos');
 		res.send(docs)
 	})
 })
@@ -61,21 +81,21 @@ app.get('/products', function (req, res) {
 app.post('/product', function (req, res) {
 
 	var newProduct = req.body
-	
+
 	inventoryDB.insert(newProduct, function (err, product) {
-		if (err) 
+		if (err)
 			res.status(500).send(err)
-		else 
+		else
 			res.send(product)
 	})
 })
 
 app.delete('/product/:productId', function (req, res) {
-	
+
 	inventoryDB.remove({ _id: req.params.productId }, function (err, numRemoved) {
-		if (err) 
+		if (err)
 			res.status(500).send(err)
-		else 
+		else
 			res.sendStatus(200)
 	})
 })
@@ -84,14 +104,14 @@ app.delete('/product/:productId', function (req, res) {
 app.put('/product', function (req, res) {
 
 	var productId = req.body._id
-	
+
 	inventoryDB.update({ _id: productId }, req.body, {}, function (err, numReplaced, product) {
-		
-		if (err) 
+
+		if (err)
 			res.status(500).send(err)
 		else
 			res.sendStatus(200)
-		
+
 	});
 
 })
@@ -99,9 +119,9 @@ app.put('/product', function (req, res) {
 app.decrementInventory = function (products) {
 
 	async.eachSeries(products, function (transactionProduct, callback) {
-		
+
 		inventoryDB.findOne({_id: transactionProduct._id }, function (err, product) {
-			
+
 			// catch manually added items (don't exist in inventory)
 			if (!product || !product.quantity_on_hand) {
 				callback();
@@ -109,7 +129,7 @@ app.decrementInventory = function (products) {
 
 			else {
 				var updatedQuantity = parseInt(product.quantity_on_hand) - parseInt(transactionProduct.quantity)
-				
+
 				inventoryDB.update({ _id: product._id }, { $set: { quantity_on_hand: updatedQuantity } }, {}, callback)
 			}
 

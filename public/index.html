@@ -12,10 +12,10 @@
 	</head>
 
 	<body ng-controller="body" class="container" ng-class="{ 'not-home': !onHomePage() }">
-		
+
 		<nav-menu ng-hide="onHomePage()"></nav-menu>
 
-		<div ng-view></div>
+		<div ng-style="{'display': 'table'}" ng-view></div>
 
 		<script src="/jquery/dist/jquery.min.js"></script>
 	    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -29,16 +29,24 @@
 		<script src="/odometer/odometer.min.js"></script>
 		<script src="/angular-odometer-js/dist/angular-odometer.min.js"></script>
 
+		<script type="text/javascript" src="/angular-tree-control/angular-tree-control.js"></script>
+		<!-- link for CSS when using the tree as a Dom element -->
+		<link rel="stylesheet" type="text/css" href="/angular-tree-control/css/tree-control.css">
+		<!-- link for CSS when using the tree as an attribute -->
+		<link rel="stylesheet" type="text/css" href="/angular-tree-control/css/tree-control-attribute.css">
+
 		<script src="/js/pos.js"></script>
 		<script src="/js/routes.js"></script>
 		<script src="/js/services.js"></script>
 		<script src="/js/directives.js"></script>
+
 	    <script>
 	    	window.onload = function () {
 				var barcode = document.getElementById('barcode');
 				if (barcode) {
 					barcode.focus();
 					barcode.select();
+					console.log(barcode);
 				}
 	    	};
 		</script>

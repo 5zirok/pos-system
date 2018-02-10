@@ -1,45 +1,48 @@
 
+<!--input id="barcode" name="barcode"-->
 <div class="text-center">
-	<span class="lead">Всего</span> 
+	<span class="lead">Всего</span>
 	<br/>
 	<span class="text-success checkout-total-price">
-		<span odometer="cart.total"></span> Грн.
+		<span odometer="cart.total"></span>
 	</span>
-	
-	<checkout 
-		cart-total="cart.total" 
+
+	<checkout
+		cart-total="cart.total"
 		print-receipt="printReceipt(payment)">
 	</checkout>
 </div>
 
+<div>
 <table class="pos table table-responsive table-striped table-hover">
 	<thead>
 		<tr>
-			<td colspan="6" class="text-center">
+			<td colspan="7" class="text-center">
 				<add-manual-item class="pull-left" add-item="addManualItem(item)"></add-manual-item>
 			</td>
 		</tr>
 		<tr class="titles">
+			<th>Штрих код</th>
 			<th>Наименование</th>
 			<th>Цена</th>
 			<th>Количество</th>
-			<th>Скидка</th>
+			<th>Скидка/Наценка</th>
 			<th>Итого</th>
 			<th></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="product in cart.products track by $index">
+		<tr ng-repeat="product in cart.products track by $index" ng-style="barcode_next===product.barcode && {'border': '1px solid red'}" ng-click="activBarcode(product)" id="{{ product.barcode }}">
+			<td class="col-md-2"> {{ product.barcode }}</td>
 			<td class="col-md-2"> {{ product.name }} </td>
-			<td class="col-md-1"> {{ product.price | currency }} </td>
-			<td class="col-md-2"> 
-
+			<td class="col-md-1"> {{(product.price*1).toFixed(2)}} </td>
+			<td class="col-md-2">
 				<button class="btn btn-sm pull-left" ng-click="removeQuantity(product)">
 					<i class="glyphicon glyphicon-minus"></i>
 				</button>
 
 				<div class="col-md-6">
-					<input 
+					<input
 						type="number"
 						class=""
 						step="1"
@@ -54,11 +57,11 @@
 				</button>
 
 			</td>
-			<td class="col-md-2"> 
-				{{  product.tax_percent * product.quantity * product.price | currency }} 
+			<td class="col-md-2">
+				{{(product.tax_percent * product.quantity * product.price).toFixed(2)}} ({{(product.tax_percent*100).toFixed(2)}}%)
 			</td>
 			<td class="col-md-2">
-				{{ (product.tax_percent * product.quantity * product.price) + ( product.price * product.quantity) | currency }}
+				{{((product.tax_percent * product.quantity * product.price) + ( product.price * product.quantity)).toFixed(2)}}
 			</td>
 			<td class="col-md-2">
 				<button class="btn btn-danger" ng-click="removeProductFromCart($index)">
@@ -67,7 +70,13 @@
 			</td>
 		</tr>
 		<tr ng-if="!cart.products.length">
-			<td colspan="6">Scan products or add unlisted item above.</td>
+			<td colspan="6">Просканируйте товар или введите штрих код вручную и нажмите Enter, количество вводится: кол*штрих-код -> Enter.<br>
+				Скидка или наценка в процентах по активному товару: 20/+ или 20/-, по сумме: 20+ или 20-<br>
+				Скидка или наценка на весь чек вводится при оплате чека.<br>
+				Активный товар является последним в списке, иначе надо выбрать другой стрелками вверх-вниз.<br>
+				Количество товара можно менять стрелками вправо-влево.<br>
+				Просканировать карту клиента для оплаты бонусами или получения дополнительных скидок можно на этапе оплаты чека.
+			</td>
 		</tr>
-	</tbody>	
+	</tbody>
 </table>

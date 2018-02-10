@@ -1,7 +1,7 @@
 <br/>
 
 <div class="text-center">
-	<span class="">Today's Sales</span> 
+	<span class="">Today's Sales</span>
 	<br/>
 	<span class="text-success checkout-total-price">
 		$ <span odometer="todayTotal"></span>
@@ -13,18 +13,26 @@
 <table ng-if="transactions" class="table table-hover table-striped">
 	<thead>
 		<tr>
-			<th>Time</th>
-			<th>Total</th>
-			<th>Customer Payment</th>
-			<th>Products</th>
-			<th>Open</th>
+			<th>№</th>
+			<th>Дата</th>
+			<th>Нал.</th>
+			<th>VISA</th>
+			<th>Кредит</th>
+			<th>Бонус</th>
+			<th>Сумма от Клиента</th>
+			<th>Кол.</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="transaction in transactions track by $index | orderBy: getTransactionDate(transaction):reverse">
 			<td> {{ transaction.date | date:'short' }} </td>
-			<td> {{ transaction.total | currency }} </td>
-			<td> {{ transaction.payment | currency }}</td>
+			<td> {{ transaction.date | date:'short' }} </td>
+			<td> {{ transaction.total}} </td>
+			<td> {{ transaction.total}} </td>
+			<td> {{ transaction.total}} </td>
+			<td> {{ transaction.total}} </td>
+			<td> {{ transaction.payment}}</td>
 			<td> {{ getNumberOfProducts(transaction.products) }} </td>
 			<td>
 				<a class="btn btn-info" href="#/transaction/{{ transaction._id }}">
@@ -35,5 +43,5 @@
 		<tr ng-if="!transactions.length">
 			<td colspan="5">No transactions found.</td>
 		</tr>
-	</tbody>	
+	</tbody>
 </table>

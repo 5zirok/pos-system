@@ -1,6 +1,6 @@
-<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+<!--button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
 	<i class="glyphicon glyphicon-plus"></i> Unlisted Item
-</button>
+</button-->
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -11,9 +11,9 @@
         <h4 class="modal-title" id="myModalLabel">Add Item</h4>
       </div>
       <div class="modal-body">
-        
-        <form class="form-horizontal" 
-        	name="addManualItemForm" 
+
+        <form class="form-horizontal"
+        	name="addManualItemForm"
         	ng-submit="addManualItemForm.$valid && add(manualItem)">
 
     			<div class="form-group" ng-class="{ 'has-error': addManualItemForm.price.$error.required }">
@@ -22,21 +22,21 @@
     					<div class="input-group-addon">$</div>
     					<input type="number" step="any" min="0" class="form-control" name="price" ng-model="manualItem.price" required/>
     				</div>
-    			</div>	
+    			</div>
 
     			<p class="text-danger" ng-show="addManualItemForm.price.$error.required">Enter price for item.</p>
 
           <div class="form-group">
-            <label class="col-md-4 control-label" for="food">Is it food?</label>  
+            <label class="col-md-4 control-label" for="food">Is it food?</label>
             <div class="col-md-4">
-              <input 
-                name="food" 
+              <input
+                name="food"
                 class="form-control"
                 type="checkbox"
-                ng-model="manualItem.food"> 
+                ng-model="manualItem.food">
             </div>
           </div>
-          
+
     		</form>
 
       </div>

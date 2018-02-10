@@ -6,8 +6,8 @@ path 		= require('path'),
 bodyParser 	= require('body-parser'),
 publicPath 	= '/../public/',
 liveCart
-var usbScanner =  require ('usbscanner'). usbScanner ;
-var getDevices =  require ('usbscanner'). getDevices ;
+var usbScanner =  require ('node-usb-barcode-scanner'). usbScanner ;
+var getDevices =  require ('node-usb-barcode-scanner'). getDevices ;
 //get array of attached HID devices
 var connectedHidDevices = getDevices()
 

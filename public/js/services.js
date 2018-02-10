@@ -13,7 +13,25 @@ pos.service('Inventory', ['$http', function ($http) {
     var apiInventoryAddress = '/api/inventory';
 
     this.getProducts = function () {
+      console.log("2222");
         return $http.get(apiInventoryAddress + '/products').then(function (res) {
+          return res.data;
+        });
+    };
+    this.getProducts_pos = function () {
+        return $http.get(apiInventoryAddress + '/products_pos').then(function (res) {
+          return res.data;
+        });
+    };
+
+    //this.selectNodeLabel = function () {
+    //    return $http.get(apiInventoryAddress + '/category_list').then(function (res) {
+    //      return res.data;
+    //    });
+    //};
+
+    this.getCategory = function () {
+        return $http.get(apiInventoryAddress + '/category_list').then(function (res) {
           return res.data;
         });
     };
