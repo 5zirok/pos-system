@@ -65,7 +65,7 @@ app.get('/category_list', function (req, res) {
 // GET all inventory items
 app.get('/products', function (req, res) {
 
-	inventoryDB.find({categoryID: "41"}, function (err, docs) {
+	inventoryDB.find({}, function (err, docs) {
 		//console.log(docs);
 		res.send(docs)
 	})

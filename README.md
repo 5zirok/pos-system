@@ -37,7 +37,8 @@ sudo npm install node-hid
 npm install node-usb-barcode-scanner
 
 
-bower install angular-tree-control
+Для формирования дерева категорий используется модуль bower install angular-tree-control
+https://github.com/wix/angular-tree-control
 ```
 
 ## Step 3: Run the app!
